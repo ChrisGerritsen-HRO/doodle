@@ -1,7 +1,7 @@
 <!doctype html>
 <title>Doodle Register</title>
 <body>
-    <from method=post>
+    <form action="{{ url_for('register') }}" method=post>
         <label for="name">Naam: </label>
         <input type="text" name="name">
 
@@ -20,6 +20,6 @@
         <label for="confirmpass">Confirm password: </label>
         <input type="password" name="confirmpass">
 
-        <button type="submit">Register</button> 
+        <input type="submit" value="Sign Up">
     </form>
 </body>

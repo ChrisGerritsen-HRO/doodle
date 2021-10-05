@@ -6,19 +6,15 @@ from werkzeug.utils import redirect, secure_filename
 import sqlite3
 import os
 
-app = Flask(__name__)
-
 SECRET_KEY = os.urandom(24)
 DATABASE = 'doodle.db'
 UPLOADFOLDER = 'images'
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+ALLOWED_EXTENSIONS = {'.png', '.jpg', '.jpeg'}
 
-# app = flask(__name__)
+app = Flask(__name__)
 app.secret_key = SECRET_KEY
 app.config['UPLOAD_FOLDER'] = UPLOADFOLDER
-
-def allow_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+app.config['ALLOWED_EXTENSIONS'] = ALLOWED_EXTENSIONS
 
 @app.route("/")
 def main():
@@ -26,18 +22,15 @@ def main():
 
 @app.route("/register", methods=["POST", "GET"])
 def register():
-    if request.method == "POST":
-        # if 'file' not in request.files:
-        #     flash('No file part')
-        #     return redirect("/")
-        # file = request.file['file']
-
-        # if file.filename == '':
-        #     flash('No selected file')
-        #     return redirect("/")
-        # if file and allow_file(file.filename):
-        #     filename = secure_filename(file.filename)
-        #     file.save(os.path.join(app.config[UPLOADFOLDER], filename))
+    # Iets nieuws zoeken voor data opslaan in database en functie netter maken.
+    if request.method == "POST" and request.form['password'] == request.form['confirmpass']:
+        file = request.files['profilepic']
+        fileName = secure_filename(file.filename)
+        if fileName != '':
+            file_ext = os.path.splitext(fileName)[1]
+        if file_ext not in app.config['ALLOWED_EXTENSIONS']:
+            os.abort(400)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], fileName))
 
         try:
             nm = request.form['name']
@@ -45,7 +38,6 @@ def register():
             birthday = request.form['birthday']
             profilePic = request.form['profilepic']
             passwrd = request.form['password']
-            confirmPasswrd = request.form['confirmpass']
 
             with sqlite3.connect(DATABASE) as con:
                 cur = con.cursor()

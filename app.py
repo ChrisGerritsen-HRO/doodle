@@ -1,9 +1,9 @@
-from flask import Flask, request,url_for
+from flask import Flask, request,url_for,session
 import flask
 from flask.helpers import flash
 from flask.templating import render_template
 from werkzeug.utils import redirect, secure_filename
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 import os, re
 
@@ -22,11 +22,52 @@ app.config['ALLOWED_EXTENSIONS'] = ALLOWED_EXTENSIONS
 
 @app.route("/")
 def main():
-    return "<p>Index page!</p>"
+    if session.get('loggedin') != True:
+        return "<p>Index page!</p>"
+    else: 
+        return redirect("/dashboard")
 
-@app.route("/login", methos=["GET", "POST"])
+@app.route("/login", methods=["POST", "GET"])
 def login():
-    pass
+    msg = ''
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+
+        sqlConnection = sqlite3.connect(DATABASE)
+        cursor = sqlConnection.cursor()
+        userSelect = """SELECT * FROM user WHERE email = ?"""
+        cursor.execute(userSelect, (email, ))
+        user = cursor.fetchone()
+
+        checkPasswrd = check_password_hash(user[5], password)
+
+        if user:
+            if checkPasswrd:
+                session['loggedin'] = True
+                session['id'] = user[0]
+                session['name'] = user[1]
+                session['email'] = user[2]
+                session['birthday'] = user[3]
+                session['profilepic'] = user[4]
+                return redirect("/dashboard")
+            else:
+                msg = 'Email of wachtwoord is onjuist!'
+
+    if session.get('loggedin') != True:            
+        return render_template("login.html", msg = msg)
+    else:
+        return redirect("/dashboard")
+
+@app.route("/logout")
+def logout():
+    session.pop('loggedin', None)
+    session.pop('id', None)
+    session.pop('name', None)
+    session.pop('email', None)
+    session.pop('birthday', None)
+    session.pop('profilepic', None)
+    return redirect("/")
 
 @app.route("/register", methods=["POST", "GET"])
 def register():
@@ -61,5 +102,14 @@ def register():
             dataHandler.insertUserData(userData)
 
             return redirect("/")
+    if session.get('loggedin') != True:   
+        return render_template("register.html", msg = msg)
+    else:
+        return redirect("/dashboard")
 
-    return render_template("register.html", msg = msg)
+@app.route("/dashboard")
+def dashboard():
+    if session.get('loggedin') == True: 
+        return render_template("dashboard.html")
+    else:
+        return redirect("/")

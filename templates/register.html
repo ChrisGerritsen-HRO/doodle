@@ -2,6 +2,7 @@
 <title>Doodle Register</title>
 <body>
     <form action="{{ url_for('register') }}" method=post enctype="multipart/form-data">
+        <div class="msg">{{ msg }}</div>
         <label for="name">Naam: </label>
         <input type="text" name="name">
 

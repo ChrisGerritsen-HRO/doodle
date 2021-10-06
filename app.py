@@ -3,8 +3,12 @@ import flask
 from flask.helpers import flash
 from flask.templating import render_template
 from werkzeug.utils import redirect, secure_filename
+from werkzeug.security import generate_password_hash
 import sqlite3
-import os
+import os, re
+
+from handlers.dataHandler import dataHandler
+from handlers.imageHandler import imageHandler
 
 SECRET_KEY = os.urandom(24)
 DATABASE = 'doodle.db'
@@ -20,34 +24,42 @@ app.config['ALLOWED_EXTENSIONS'] = ALLOWED_EXTENSIONS
 def main():
     return "<p>Index page!</p>"
 
+@app.route("/login", methos=["GET", "POST"])
+def login():
+    pass
+
 @app.route("/register", methods=["POST", "GET"])
 def register():
-    # Iets nieuws zoeken voor data opslaan in database en functie netter maken.
+    msg = ''
     if request.method == "POST" and request.form['password'] == request.form['confirmpass']:
-        file = request.files['profilepic']
-        fileName = secure_filename(file.filename)
-        if fileName != '':
-            file_ext = os.path.splitext(fileName)[1]
-        if file_ext not in app.config['ALLOWED_EXTENSIONS']:
-            os.abort(400)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], fileName))
+        sqlConnection = sqlite3.connect(DATABASE)
+        cursor = sqlConnection.cursor()
+        userSelect = """SELECT * FROM user WHERE email = ?"""
+        cursor.execute(userSelect, (request.form['email'], ))
+        user = cursor.fetchone()
 
-        try:
-            nm = request.form['name']
-            email = request.form['email']
-            birthday = request.form['birthday']
-            profilePic = request.form['profilepic']
-            passwrd = request.form['password']
+        if user:
+            print("Account bestaat al!")
+            msg = 'Account bestaat al!'
+        elif not re.match(r'[^@]+@[^@]+\.[^@]+', request.form['email']):
+            msg = 'Geen geldig email adres!'
+        else:
+            file = request.files['profilepic']
+            fileName = secure_filename(file.filename)
+            imageHandler.userImageHandler(file, fileName)
 
-            with sqlite3.connect(DATABASE) as con:
-                cur = con.cursor()
-                cur.execute("INSERT INTO user (name, email, birthday, profilepic, password) VALUES (?,?,?,?,?)", (nm, email, birthday, profilePic, passwrd))
+            hashPasswrd = generate_password_hash(request.form['password'], "sha256")
+
+            userData = (
+                request.form['name'],
+                request.form['email'],
+                request.form['birthday'],
+                fileName,
+                hashPasswrd,
+            )
                 
-                con.commit()
-        except:
-            pass
-        finally:
-            con.close()
+            dataHandler.insertUserData(userData)
+
             return redirect("/")
 
-    return render_template("register.html")
+    return render_template("register.html", msg = msg)

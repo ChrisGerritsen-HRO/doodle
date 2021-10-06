@@ -27,3 +27,5 @@ htmlcov/
 
 # database
 .db-journal
+
+__pycache__

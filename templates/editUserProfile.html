@@ -1,0 +1,26 @@
+<!doctype html>
+<title>Profiel Aanpassen</title>
+<body>
+    <form action="{{ url_for('editUserProfile') }}" method=post enctype="multipart/form-data">
+        <label for="name">Naam: </label>
+        <input value="{{ session.name }}" type="text" name="name">
+
+        <label for="email">Email: </label>
+        <input value="{{ session.email }}" type="email" name="email">
+
+        <label for="birthday">Birthday: </label>
+        <input value="{{ session.birthday }}" type="date" name="birthday">
+
+        <img src="/static/user/{{ session.profilepic }}" alt="user image"><br>
+        <label for="profilepic">Profile picture: </label>
+        <input type="file" name="profilepic">
+
+        <label for="password">Password: </label>
+        <input type="password" name="password">
+
+        <label for="confirmpass">Confirm password: </label>
+        <input type="password" name="confirmpass">
+
+        <input type="submit" value="Opslaan">
+    </form>
+</body>

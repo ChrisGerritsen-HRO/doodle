@@ -1,0 +1,11 @@
+<!doctype html>
+<title>Profiel {{ session.name }}</title>
+<body>
+    <img src="/static/user/{{ session.profilepic }}" alt="user image"><br>
+    <p>Naam: {{ session.name }}</p>
+    <p>Email: {{ session.email }}</p>
+    <p>Birtday: {{ session.birthday }}</p>
+    <br>
+    <a href="{{ url_for('editUserProfile') }}">Profiel Aanpassen</a>
+    <a href="/dashboard">Dashboard</a>
+</body>

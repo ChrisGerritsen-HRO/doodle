@@ -1,12 +1,18 @@
-from flask import Flask, session
+from flask import Flask, request, url_for, session
 import flask
 from flask.helpers import flash
 from flask.templating import render_template
-from werkzeug.utils import redirect
-import os
+from werkzeug.utils import redirect, secure_filename
+from werkzeug.security import generate_password_hash, check_password_hash
+import sqlite3
+import os, re
 
-# Import userController
 from controllers import userController
+
+# Import dataHandler
+from handlers.dataHandler import dataHandler
+# Import imageHandler
+from handlers.imageHandler import imageHandler
 
 SECRET_KEY = os.urandom(24)
 DATABASE = 'doodle.db'
@@ -27,15 +33,15 @@ def main():
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
-    userController.user.login()
+    return userController.user.login()
 
 @app.route("/logout")
 def logout():
-    userController.user.logout()
+    return userController.user.logout()
 
 @app.route("/register", methods=["POST", "GET"])
 def register():
-    userController.user.register()
+    return userController.user.register()
 
 @app.route("/dashboard")
 def dashboard():
@@ -43,3 +49,11 @@ def dashboard():
         return render_template("dashboard.html")
     else:
         return redirect("/")
+
+@app.route("/user/profiel")
+def profile():
+    return userController.user.profile()
+
+@app.route("/user/profile/edit")
+def editUserProfile():
+    return userController.user.editUserProfile()

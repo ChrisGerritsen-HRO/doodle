@@ -1,4 +1,4 @@
-from flask import Flask, request,url_for,session
+from flask import Flask, request, url_for, session
 import flask
 from flask.helpers import flash
 from flask.templating import render_template
@@ -95,3 +95,20 @@ class user():
             return render_template("register.html", msg = msg)
         else:
             return redirect("/dashboard")
+
+    def profile():
+        if session.get('loggedin') == True: 
+            return render_template("profile.html")
+        else:
+            return redirect("/")
+
+    def editUserProfile():
+        # if request.method == "POST":
+        #     sqlConnection = sqlite3.connect(DATABASE)
+        #     cursor = sqlConnection.cursor()
+
+        #     return redirect("/user/profile")
+        if session.get('loggedin') == True:   
+            return render_template("editUserProfile.html")
+        else:
+            return redirect("/login")

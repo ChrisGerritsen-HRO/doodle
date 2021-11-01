@@ -2,7 +2,7 @@ import os
 from flask import Flask
 
 SECRET_KEY = os.urandom(24)
-USER_UPLOADFOLDER = 'images/user'
+USER_UPLOADFOLDER = 'static/user'
 ALLOWED_EXTENSIONS = {'.png', '.jpg', '.jpeg'}
 
 app = Flask(__name__)

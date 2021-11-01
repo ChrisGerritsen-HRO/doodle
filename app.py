@@ -29,7 +29,7 @@ def main():
     if session.get('loggedin') != True:
         return "<p>Index page!</p>"
     else: 
-        return redirect("/dashboard")
+        return redirect("dashboard")
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
@@ -48,12 +48,12 @@ def dashboard():
     if session.get('loggedin') == True: 
         return render_template("dashboard.html")
     else:
-        return redirect("/")
+        return redirect("/login")
 
 @app.route("/user/profiel")
 def profile():
     return userController.user.profile()
 
-@app.route("/user/profile/edit")
+@app.route("/user/profile/edit", methods=["POST", "GET"])
 def editUserProfile():
     return userController.user.editUserProfile()

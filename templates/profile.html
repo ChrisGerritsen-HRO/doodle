@@ -1,11 +1,23 @@
 <!doctype html>
 <title>Profiel {{ session.name }}</title>
 <body>
-    <img src="/static/user/{{ session.profilepic }}" alt="user image"><br>
-    <p>Naam: {{ session.name }}</p>
-    <p>Email: {{ session.email }}</p>
-    <p>Birtday: {{ session.birthday }}</p>
+    <table>
+        <tr>
+            <td><img src="/static/user/{{ userData.profilepic }}" alt="user image"></td>
+        </tr>
+        <tr>
+            <td>Naam: </td>
+            <td>{{ userData.name }}</td>
+        </tr>
+        <tr>
+            <td>Email: </td>
+            <td>{{ userData.email }}</td>
+        </tr>
+            <td>Geboorte datum: </td>
+            <td>{{ userData.birthday }}</td>
+        </tr>
+    </table>
     <br>
     <a href="{{ url_for('editUserProfile') }}">Profiel Aanpassen</a>
-    <a href="/dashboard">Dashboard</a>
+    <a href="{{ url_for('dashboard') }}">Dashboard</a>
 </body>

@@ -97,18 +97,63 @@ class user():
             return redirect("/dashboard")
 
     def profile():
-        if session.get('loggedin') == True: 
-            return render_template("profile.html")
+        if session.get('loggedin') == True:
+            userData = dataHandler.selectUserData()
+            return render_template("profile.html", userData = userData)
         else:
-            return redirect("/")
+            return redirect("/login")
 
     def editUserProfile():
-        # if request.method == "POST":
-        #     sqlConnection = sqlite3.connect(DATABASE)
-        #     cursor = sqlConnection.cursor()
+        if request.method == "POST":
+            file = request.files['profilepic']
+            fileName = secure_filename(file.filename)
+            if file.tell() != 0:
+                file = request.files['profilepic']
+                fileName = secure_filename(file.filename)
+                imageHandler.userImageHandler(file, fileName)
 
-        #     return redirect("/user/profile")
-        if session.get('loggedin') == True:   
-            return render_template("editUserProfile.html")
+            updatedUserData = ()
+
+            userData = dataHandler.selectUserData()
+            print(userData)
+            if request.form['name'] != '':
+                updatedUserData = updatedUserData + (request.form['name'], )
+            else:
+                updatedUserData = updatedUserData + (userData['name'], )
+            if request.form['email'] != '':
+                updatedUserData = updatedUserData + (request.form['email'], )
+            else:
+                updatedUserData = updatedUserData + (userData['email'], )
+            if request.form['birthday'] != '':
+                updatedUserData = updatedUserData + (request.form['birthday'], )
+            else:
+                updatedUserData = updatedUserData + (userData['birthday'], )
+            if fileName != '':
+                updatedUserData = updatedUserData + (fileName, )
+            else:
+                updatedUserData = updatedUserData + (userData['profilepic'], )
+            if request.form['password'] != '':
+                hashPasswrd = generate_password_hash(request.form['password'], "sha256")
+                updatedUserData = updatedUserData + (hashPasswrd, )
+            else:
+                updatedUserData = updatedUserData + (userData['password'], )
+            updatedUserData = updatedUserData + (session['id'], )
+
+            # hashPasswrd = generate_password_hash(request.form['password'], "sha256")
+            # updatedUserData = (
+            #     request.form['name'],
+            #     request.form['email'],
+            #     request.form['birthday'],
+            #     fileName,
+            #     hashPasswrd,
+            #     session['id']
+            # )
+
+            dataHandler.updateUserData(updatedUserData)
+
+            return redirect("/")
+        if session.get('loggedin') == True:
+            userData = dataHandler.selectUserData()
+            return render_template("editUserProfile.html", userData = userData)
         else:
             return redirect("/login")

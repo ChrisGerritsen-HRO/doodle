@@ -2,25 +2,39 @@
 <title>Profiel Aanpassen</title>
 <body>
     <form action="{{ url_for('editUserProfile') }}" method=post enctype="multipart/form-data">
-        <label for="name">Naam: </label>
-        <input value="{{ session.name }}" type="text" name="name">
-
-        <label for="email">Email: </label>
-        <input value="{{ session.email }}" type="email" name="email">
-
-        <label for="birthday">Birthday: </label>
-        <input value="{{ session.birthday }}" type="date" name="birthday">
-
-        <img src="/static/user/{{ session.profilepic }}" alt="user image"><br>
-        <label for="profilepic">Profile picture: </label>
-        <input type="file" name="profilepic">
-
-        <label for="password">Password: </label>
-        <input type="password" name="password">
-
-        <label for="confirmpass">Confirm password: </label>
-        <input type="password" name="confirmpass">
-
-        <input type="submit" value="Opslaan">
+        <table>
+            <tr>
+                <td><img src="/static/user/{{ userData.profilepic }}" alt="user image"></td>
+                <td><input type="file" name="profilepic"></td>
+            </tr>
+            <tr>
+                <td>Naam: </td>
+                <td>{{ userData.name }}</td>
+                <td><input type="text" name="name" placeholder="Vul nieuwe naam in."></td>
+            </tr>
+            <tr>
+                <td>Email: </td>
+                <td>{{ userData.email }}</td>
+                <td><input type="email" name="email" placeholder="Vul nieuwe email in."></td>
+            </tr>
+            <tr>
+                <td>Geboorte datum: </td>
+                <td>{{ userData.birthday }}</td>
+                <td><input type="date" name="birthday" placeholder="Vul nieuwe geboorte datum in."></td>
+            </tr>
+            <tr>
+                <td>Wachtwoord: </td>
+                <td>******</td>
+                <td><input type="password" name="password" placeholder="Vul nieuwe wachtwoord in."></td>
+            </tr>
+            <tr>
+                <td>Herhaal wachtwoord: </td>
+                <td>******</td>
+                <td><input type="password" name="confirmpass"></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Opslaan"></td>
+            </tr>
+        </table>
     </form>
 </body>

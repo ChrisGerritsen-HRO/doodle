@@ -41,7 +41,7 @@ class dataHandler():
             'birthday' : selectedUserData[3],
             'password' : selectedUserData[5]
         }    
-        print(userData)
+        # print(userData)
         sqlConnection.close()
         return userData
 

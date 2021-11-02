@@ -9,6 +9,7 @@ import os, re
 
 # Import dataHandler
 from handlers.userDataHandler import dataHandler
+from handlers.dogDataHandler import dogDataHandler
 # Import imageHandler
 from handlers.imageHandler import imageHandler
 
@@ -99,7 +100,8 @@ class user():
     def profile():
         if session.get('loggedin') == True:
             userData = dataHandler.selectUserData()
-            return render_template("profile.html", userData = userData)
+            dogData = dogDataHandler.selectUserDogs()
+            return render_template("profile.html", userData = userData, dogs = dogData)
         else:
             return redirect("/login")
 

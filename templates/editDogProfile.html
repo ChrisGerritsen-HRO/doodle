@@ -1,0 +1,46 @@
+<!doctype html>
+<title>Profiel Aanpassen</title>
+
+<style>
+    .dogImg {
+        width: 300px;
+        height 200px;
+    }
+</style>
+
+<body>
+{% block content %}
+    <form action="{{ url_for('editDogProfile', name = dogData.name) }}" method=post enctype="multipart/form-data">
+        <table>
+            <tr>
+                <td><img src="/static/dog/{{ dogData.profilepic }}" alt="dog image" class="dogImg"></td>
+                <td><input type="file" name="profilepic"></td>
+            </tr>
+            <tr>
+                <td>Naam: </td>
+                <td>{{ dogData.name }}</td>
+                <td><input type="text" name="name" placeholder="Vul nieuwe naam in."></td>
+            </tr>
+            <tr>
+                <td>Geboorte datum: </td>
+                <td>{{ dogData.birthday }}</td>
+                <td><input type="date" name="birthday" placeholder="Vul nieuwe geboorte datum in."></td>
+            </tr>
+            <tr>
+                <td>Ras: </td>
+                <td>{{ dogData.race }}</td>
+                <td><input type="text" name="race" placeholder="Vul een ander ras in."></td>
+            </tr>
+            <tr>
+                <td>Karakter: </td>
+                <td>{{ dogData.character }}</td>
+                <td><input type="text" name="character" placeholder="Vul een ander karakter in."></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Opslaan"></td>
+            </tr>
+        </table>
+    </form>
+{% endblock %}
+    <a href="{{ url_for('dashboard') }}">Dashboard</a>
+</body>

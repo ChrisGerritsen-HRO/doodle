@@ -68,4 +68,12 @@ def editUserProfile():
 def addDog():
     return dogController.dog.addDog()
 
+@app.route("/dog/<name>")
+def dogProfile(name = None):
+    return dogController.dog.dogProfile(name)
+
+@app.route("/dog/<name>/edit", methods=["POST", "GET"])
+def editDogProfile(name = None):
+    return dogController.dog.editDogProfile(name)
+
 ###

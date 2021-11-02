@@ -8,13 +8,13 @@ import sqlite3
 import os, re
 
 # Import dataHandler
-from handlers.dataHandler import dataHandler
+from handlers.userDataHandler import dataHandler
 # Import imageHandler
 from handlers.imageHandler import imageHandler
 
 SECRET_KEY = os.urandom(24)
 DATABASE = 'doodle.db'
-UPLOADFOLDER = 'images'
+UPLOADFOLDER = 'static/user'
 ALLOWED_EXTENSIONS = {'.png', '.jpg', '.jpeg'}
 
 class user():

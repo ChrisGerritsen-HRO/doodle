@@ -7,10 +7,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 import os, re
 
-from controllers import userController
+from controllers import userController, dogController
 
 # Import dataHandler
-from handlers.dataHandler import dataHandler
+from handlers.userDataHandler import dataHandler
 # Import imageHandler
 from handlers.imageHandler import imageHandler
 
@@ -31,6 +31,8 @@ def main():
     else: 
         return redirect("dashboard")
 
+# USER #
+
 @app.route("/login", methods=["POST", "GET"])
 def login():
     return userController.user.login()
@@ -50,10 +52,20 @@ def dashboard():
     else:
         return redirect("/login")
 
-@app.route("/user/profiel")
+@app.route("/user/profile")
 def profile():
     return userController.user.profile()
 
 @app.route("/user/profile/edit", methods=["POST", "GET"])
 def editUserProfile():
     return userController.user.editUserProfile()
+
+###
+
+# DOG #
+
+@app.route("/dog/add", methods=["POST", "GET"])
+def addDog():
+    return dogController.dog.addDog()
+
+###

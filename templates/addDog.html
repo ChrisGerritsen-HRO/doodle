@@ -1,0 +1,22 @@
+<!doctype html>
+<title>Hond Toevoegen</title>
+<body>
+    <form action="{{ url_for('addDog') }}" method=post enctype="multipart/form-data">
+        <label for="name">Naam: </label>
+        <input type="text" name="name">
+
+        <label for="birthday">Geboorte datum: </label>
+        <input type="date" name="birthday">
+
+        <label for="profilepic">Profiel foto: </label>
+        <input type="file" name="profilepic">
+
+        <label for="name">Ras: </label>
+        <input type="text" name="race">
+
+        <label for="name">Karakter: </label>
+        <input type="text" name="character">
+
+        <input type="submit" value="Toevoegen">
+    </form>
+</body>

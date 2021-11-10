@@ -27,7 +27,7 @@ app.config['ALLOWED_EXTENSIONS'] = ALLOWED_EXTENSIONS
 @app.route("/")
 def main():
     if session.get('loggedin') != True:
-        return "<p>Index page!</p>"
+        return render_template("index.html")
     else: 
         return redirect("dashboard")
 

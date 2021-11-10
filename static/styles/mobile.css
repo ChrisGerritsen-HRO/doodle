@@ -8,7 +8,29 @@
   overflow: hidden;
 }
 
-.nav span img {
+.nav .userSide {
+  float: right;
+  padding: 3%;
+}
+
+.nav .userSide a {
+  font-size: 15px;
+  color: #FFFF;
+  text-decoration: none;
+}
+
+.nav a img {
   width: 30px;
-  margin: 1%;
+  margin: 2%;
+}
+
+.nav #menuLinks {
+  display: none;
+  padding: 3%;
+}
+
+.nav #menuLinks a {
+  color: #FFFF;
+  text-decoration: none;
+  padding: 1%;
 }

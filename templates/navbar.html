@@ -5,13 +5,34 @@
 <html>
     <head>
         <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
         <div class="nav">
-            <span>
+            <a href="javascript:void(0);" onclick="openMenu()">
                 <img id="hamburger" src="static/icons/menu.png" alt="Menu">
-            </span>
+            </a>
+            <div class="userSide">
+                <a href="/login">Login</a>
+                <a href="/register">Registreer</a>
+            </div>
+            <div id="menuLinks">
+                <a href="#news">Tricks</a>
+            </div>
         </div>
         {% block content %}{% endblock %}
     </body>
 </html>
+
+<script>
+
+    function openMenu() {
+        var x = document.getElementById("menuLinks");
+        if (x.style.display === "block") {
+            x.style.display = "none";
+        } else {
+            x.style.display = "block";
+        }
+    }
+
+</script>

@@ -1,26 +1,48 @@
-<!doctype html>
+{% include 'navbar.html' %}
+
 <title>Doodle Register</title>
-<body>
-    <form action="{{ url_for('register') }}" method=post enctype="multipart/form-data">
-        <div class="msg">{{ msg }}</div>
-        <label for="name">Naam: </label>
-        <input type="text" name="name">
 
-        <label for="email">Email: </label>
-        <input type="email" name="email">
+{% block content %}
+    <body>
+        <form action="{{ url_for('register') }}" method=post enctype="multipart/form-data">
+            <div class="userForms registerForm">
+                <div class="msg">{{ msg }}</div>
 
-        <label for="birthday">Birthday: </label>
-        <input type="date" name="birthday">
+                <div>
+                    <label for="name">Naam: </label>
+                    <input type="text" name="name">
+                </div>
 
-        <label for="profilepic">Profile picture: </label>
-        <input type="file" name="profilepic">
+                <div>
+                    <label for="email">Email: </label>
+                    <input type="email" name="email">
+                </div>
 
-        <label for="password">Password: </label>
-        <input type="password" name="password">
+                <div>
+                    <label for="birthday">Geboortedatum: </label>
+                    <input type="date" name="birthday">
+                </div>
 
-        <label for="confirmpass">Confirm password: </label>
-        <input type="password" name="confirmpass">
+                <div class="fileUpload">
+                    <label for="fileUpload">Profiel foto uploaden</label>
+                    <input id="fileUpload" type="file" name="profilepic" hidden>
+                </div>
 
-        <input type="submit" value="Sign Up">
-    </form>
-</body>
+                <div>
+                    <label for="password">Wachtwoord: </label>
+                    <input type="password" name="password">
+                </div>
+
+                <div>
+                    <label for="confirmpass">Wachtwoord herhalen: </label>
+                    <input type="password" name="confirmpass">
+                </div>
+
+                <div>
+                    <input class="submit" type="submit" value="Sign Up">
+                </div>
+
+            </div>
+        </form>
+    </body>
+{% endblock content %}

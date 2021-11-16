@@ -1,48 +1,51 @@
-<!doctype html>
+{% include 'navbar.html' %}
+
 <title>Profiel {{ session.name }}</title>
 
 <style>
-    .dogImg {
-        width: 300px;
-        height 200px;
+    table td img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
     }
 </style>
 
-<body>
 {% block content %}
-    <table>
-        <tr>
-            <td><img src="/static/user/{{ userData.profilepic }}" alt="user image"></td>
-            <td>{{ userData.name }}</td>
-            <td>{{ userData.email }}</td>
-            <td>{{ userData.birthday }}</td>
-        </tr>
-        <tr>
-            <td><a href="{{ url_for('editUserProfile') }}">Profiel Aanpassen</a></td>
-        </tr>
-    </table>
+    <body>
+        <table class="profile">
+            <tr>
+                <td><img src="/static/user/{{ userData.profilepic }}" alt="user image"></td>
+                <td>{{ userData.name }}</td>
+                <td>{{ userData.email }}</td>
+                <td>{{ userData.birthday }}</td>
+            </tr>
+            <tr>
+                <td><a href="{{ url_for('editUserProfile') }}">Profiel Aanpassen</a></td>
+            </tr>
+        </table>
 
-    <table>
-        <tr>
-            <th>Mijn Honden:</th>
-        </tr>
-        <tr>
-            <td><a href="{{ url_for('addDog') }}">Hond toevoegen</a></td>
-        </tr>
-        {% for dog in dogs %}
-        <tr>
-            <td><img src="/static/dog/{{ dog[3] }}" alt="dog image" class="dogImg"></td>
-            <td>{{ dog[1] }}</td>
-            <td>{{ dog[2] }}</td>
-            <td>{{ dog[4] }}</td>
-            <td>{{ dog[5] }}</td>
-            <br>
-            <td><a href="/dog/{{ dog[1] }}">Bekijk hond</a></td>
-        </tr>
-        {% endfor %}
-    </table>
+        <table>
+            <tr>
+                <th>Mijn Honden:</th>
+            </tr>
+            <tr>
+                <td><a href="{{ url_for('addDog') }}">Hond toevoegen</a></td>
+            </tr>
+            {% for dog in dogs %}
+            <tr>
+                <td><img src="/static/dog/{{ dog[3] }}" alt="dog image" class="dogImg"></td>
+                <td>{{ dog[1] }}</td>
+                <td>{{ dog[2] }}</td>
+                <td>{{ dog[4] }}</td>
+                <td>{{ dog[5] }}</td>
+                <br>
+                <td><a href="/dog/{{ dog[1] }}">Bekijk hond</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+
+
+        <br>
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+    </body>
 {% endblock %}
-
-    <br>
-    <a href="{{ url_for('dashboard') }}">Dashboard</a>
-</body>

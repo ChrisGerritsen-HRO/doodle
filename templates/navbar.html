@@ -1,6 +1,7 @@
 <!doctype html>
 
-<link rel="stylesheet" href="static/styles/mobile.css">
+<link rel="stylesheet" href="/static/styles/mobile.css">
+<script scr="/static/scripts/mobile.js"></script>
 
 <html>
     <head>
@@ -10,12 +11,19 @@
     <body>
         <div class="nav">
             <a href="javascript:void(0);" onclick="openMenu()">
-                <img id="hamburger" src="static/icons/menu.png" alt="Menu">
+                <img id="hamburger" src="/static/icons/menu.png" alt="Menu">
             </a>
             <div class="userSide">
-                <a href="/login">Login</a>
-                <a href="/register">Registreer</a>
-            </div>
+                {% if session['name'] %}
+                    <a href="{{ url_for('profile') }}">
+                        <img id="profilepic" src="/static/user/{{ session['profilepic'] }}" alt="user image">
+                    </a>
+                {% else %}
+                    
+                    <a href="/login">Login</a>
+                    <a href="/register">Registreer</a>
+                {% endif %} 
+            </div>   
             <div id="menuLinks">
                 <a href="#news">Tricks</a>
             </div>

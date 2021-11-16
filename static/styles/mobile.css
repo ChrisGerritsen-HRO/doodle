@@ -1,6 +1,11 @@
 * {
   margin: 0;
   padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background-color: lightgray;
 }
 
 .nav {
@@ -24,6 +29,12 @@
   margin: 2%;
 }
 
+.nav a #profilepic {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}
+
 .nav #menuLinks {
   display: none;
   padding: 3%;
@@ -33,4 +44,42 @@
   color: #FFFF;
   text-decoration: none;
   padding: 1%;
+}
+
+.userForms {
+  margin: auto;
+  width: 50%;
+  padding-top: 40%;
+}
+
+.userForms div{
+  padding-top: 10%;
+}
+
+.userForms div input {
+  height: 20px;
+}
+
+.userForms div .submit {
+  padding: 4%;
+  background-color: lightblue;
+  border: none;
+  color: #FFFF;
+  width: 75px;
+  height: 35px;
+  border-radius: 10px;
+}
+
+.registerForm {
+  padding-top: 10%;
+}
+
+.fileUpload label {
+  padding: 4%;
+  background-color: lightblue;
+  border: none;
+  color: #FFFF;
+  width: 75px;
+  height: 35px;
+  border-radius: 10px;
 }

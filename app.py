@@ -6,6 +6,7 @@ from werkzeug.utils import redirect, secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 import os, re
+import sys
 
 from controllers import userController, dogController
 
@@ -79,5 +80,11 @@ def editDogProfile(name = None):
 ###
 
 if __name__ == '__main__':
-    app.debug = True
-    app.run(host="0.0.0.0")
+    if len(sys.argv) > 1:
+        args = sys.argv[1].split(":")
+        host = args[0]
+        port = int(args[1])
+    else:
+        host = "0.0.0.0"
+        port = 6060
+    app.run(debug=True, host=host, port=port)

@@ -1,41 +1,88 @@
-<!doctype html>
+{% include 'navbar.html' %}
+
 <title>Profiel Aanpassen</title>
-<body>
-    <form action="{{ url_for('editUserProfile') }}" method=post enctype="multipart/form-data">
-        <table>
-            <tr>
-                <td><img src="/static/user/{{ userData.profilepic }}" alt="user image"></td>
-                <td><input type="file" name="profilepic"></td>
-            </tr>
-            <tr>
-                <td>Naam: </td>
-                <td>{{ userData.name }}</td>
-                <td><input type="text" name="name" placeholder="Vul nieuwe naam in."></td>
-            </tr>
-            <tr>
-                <td>Email: </td>
-                <td>{{ userData.email }}</td>
-                <td><input type="email" name="email" placeholder="Vul nieuwe email in."></td>
-            </tr>
-            <tr>
-                <td>Geboorte datum: </td>
-                <td>{{ userData.birthday }}</td>
-                <td><input type="date" name="birthday" placeholder="Vul nieuwe geboorte datum in."></td>
-            </tr>
-            <tr>
-                <td>Wachtwoord: </td>
-                <td>******</td>
-                <td><input type="password" name="password" placeholder="Vul nieuwe wachtwoord in."></td>
-            </tr>
-            <tr>
-                <td>Herhaal wachtwoord: </td>
-                <td>******</td>
-                <td><input type="password" name="confirmpass"></td>
-            </tr>
-            <tr>
-                <td><input type="submit" value="Opslaan"></td>
-            </tr>
-        </table>
-    </form>
-    <a href="{{ url_for('dashboard') }}">Dashboard</a>
-</body>
+
+{% block content %}
+    <body>
+        
+        <form action="{{ url_for('editUserProfile') }}" method=post enctype="multipart/form-data">
+            <div class="userForms registerForm">
+                <div class="msg">{{ msg }}</div>
+
+                <div>
+                    <img src="/static/user/{{ userData.profilepic }}" alt="user image">
+                </div>
+
+                <div>
+                    <label for="name">Naam: </label>
+                    <input type="text" name="name" placeholder="{{ userData.name }}">
+                </div>
+
+                <div>
+                    <label for="email">Email: </label>
+                    <input type="email" name="email" placeholder="userData.email">
+                </div>
+
+                <div>
+                    <label for="birthday">Geboortedatum: </label>
+                    <input type="date" name="birthday" placeholder="userData.birthday">
+                </div>
+
+                <!--<div class="fileUpload">
+                    <label for="fileUpload">Profiel foto uploaden</label>
+                    <input id="fileUpload" type="file" name="profilepic" hidden>
+                </div>-->
+
+                <div>
+                    <label for="password">Wachtwoord: </label>
+                    <input type="password" name="password" placeholder="********">
+                </div>
+
+                <div>
+                    <label for="confirmpass">Wachtwoord herhalen: </label>
+                    <input type="password" name="confirmpass">
+                </div>
+
+                <div>
+                    <input class="submit" type="submit" value="Opslaan">
+                </div>
+
+            </div>
+            <!--<table>
+                <tr>
+                    <td><img src="/static/user/{{ userData.profilepic }}" alt="user image"></td>
+                    <td><input type="file" name="profilepic"></td>
+                </tr>
+                <tr>
+                    <td>Naam: </td>
+                    <td>{{ userData.name }}</td>
+                    <td><input type="text" name="name" placeholder="Vul nieuwe naam in."></td>
+                </tr>
+                <tr>
+                    <td>Email: </td>
+                    <td>{{ userData.email }}</td>
+                    <td><input type="email" name="email" placeholder="Vul nieuwe email in."></td>
+                </tr>
+                <tr>
+                    <td>Geboorte datum: </td>
+                    <td>{{ userData.birthday }}</td>
+                    <td><input type="date" name="birthday" placeholder="Vul nieuwe geboorte datum in."></td>
+                </tr>
+                <tr>
+                    <td>Wachtwoord: </td>
+                    <td>******</td>
+                    <td><input type="password" name="password" placeholder="Vul nieuwe wachtwoord in."></td>
+                </tr>
+                <tr>
+                    <td>Herhaal wachtwoord: </td>
+                    <td>******</td>
+                    <td><input type="password" name="confirmpass"></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Opslaan"></td>
+                </tr>
+            </table>-->
+        </form>
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+    </body>
+{% endblock %}

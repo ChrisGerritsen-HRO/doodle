@@ -2,29 +2,36 @@
 
 <title>Profiel {{ session.name }}</title>
 
-<style>
-    table td img {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-    }
-</style>
-
 {% block content %}
     <body>
-        <table class="profile">
-            <tr>
-                <td><img src="/static/user/{{ userData.profilepic }}" alt="user image"></td>
-                <td>{{ userData.name }}</td>
-                <td>{{ userData.email }}</td>
-                <td>{{ userData.birthday }}</td>
-            </tr>
-            <tr>
-                <td><a href="{{ url_for('editUserProfile') }}">Profiel Aanpassen</a></td>
-            </tr>
-        </table>
+        <div class="profile">
+            <img src="/static/user/{{ userData.profilepic }}" alt="user image">
+            <div>
+                <h2>{{ userData.name }}</h2>
+                <p>{{ userData.birthday }}</p>
+                <a href="{{ url_for('editUserProfile') }}">Aanpassen</a>
+            </div>
+        </div>
 
-        <table>
+        <div class="addDog">
+            <h2>Mijn honden:</h2>
+            <a href="{{ url_for('addDog') }}" id="addDogButton">+</a>
+        </div>
+
+        <div class="dogList">
+            {% for dog in dogs %}
+                <div>
+                    <img src="/static/dog/{{ dog[3] }}" alt="dog image" class="dogImg">
+                    <p>
+                        {{ dog[1] }}<br>
+                        {{ dog[2] }}<br>
+                        {{ dog[4] }}
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!--<table>
             <tr>
                 <th>Mijn Honden:</th>
             </tr>
@@ -42,10 +49,6 @@
                 <td><a href="/dog/{{ dog[1] }}">Bekijk hond</a></td>
             </tr>
             {% endfor %}
-        </table>
-
-
-        <br>
-        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        </table>-->
     </body>
 {% endblock %}
